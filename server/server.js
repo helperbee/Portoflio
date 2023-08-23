@@ -16,9 +16,9 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
 app.get('/api', (req, res) => {
-  let target = Helper.leetcodeGraphUrl("bobby");
+  let target = Helper.leetcodeGraphUrl(process.env.LEETUSER);
   axios.get(target).then((response) => {
-    res.send(response.data);
+    res.send(response.data.data.recentSubmissionList);
   }).catch((error) => {
     res.send(error);
   });
