@@ -4,9 +4,9 @@ import React from 'react';
 
 
 
-let LeetCodeProblem = () => {
+let LeetCodeProblem = ({problem}) => {
     return (
-        <h3>LeetCode Problem</h3>
+        <h3>{problem.title}</h3>
     );
 }
 
