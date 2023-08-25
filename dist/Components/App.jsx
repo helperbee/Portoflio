@@ -1,54 +1,48 @@
-import React, { useState, useEffect } from 'react';
-import Typed from 'typed.js';
-import { Container, Box, createTheme, ThemeProvider } from '@mui/material';
+import React from 'react';
+import { Card } from 'antd';
+import { EditOutlined, EllipsisOutlined, SettingOutlined } from '@ant-design/icons';
+import { Row, Col } from 'antd';
 import LeetCode from './LeetCode.jsx';
+//import LeetCode from './LeetCode.jsx';
 
-const theme = createTheme({
-  palette: {
-    mode: 'dark', // Set the theme mode to dark
-    primary: {
-      main: '#90caf9', // Adjust primary color for dark mode
-    },
-    secondary: {
-      main: '#f48fb1', // Adjust secondary color for dark mode
-    },
-    background: {
-      default: '#121212', // Adjust background color for dark mode
-      paper: '#1e1e1e', // Adjust paper color for dark mode
-    },
-  },
-  typography: {
-    fontFamily: 'Roboto, Arial, sans-serif',
-  },
-});
+const gridStyle = {
+  width: '25%',
+  textAlign: 'center',
+};
 export default function App() {
   const el = React.useRef(null);
-  useEffect(() => {
-    const typed = new Typed(el.current, {
-      strings: ["I'm Mike, welcome to my development sampler."],
-      startDelay: 300,
-      typeSpeed: 100,
-      backSpeed: 100,
-      backDelay: 100
-    });
-    return () => {
-      typed.destroy();
-    };
-  }, []);
+  // useEffect(() => {
+  //   const typed = new Typed(el.current, {
+  //     strings: ["I'm Mike, welcome to my development sampler."],
+  //     startDelay: 300,
+  //     typeSpeed: 100,
+  //     backSpeed: 100,
+  //     backDelay: 100
+  //   });
+  //   return () => {
+  //     typed.destroy();
+  //   };
+  // }, []);
   return (
-    <ThemeProvider theme={theme}>
-      <Container maxWidth="md">
-          <Box
-            display="flex"
-            flexDirection="column"
-            alignItems="center"
-            justifyContent="center"
-            minHeight="100vh"
-          >
-          <h1 ref={el}></h1>
-          <LeetCode />
-        </Box>
-      </Container>
-    </ThemeProvider>
+    <div style={{ minHeight: '100vh', padding: '20px' }}>
+      <LeetCode />
+      <Row justify="center" align="middle" style={{ minHeight: '100%', margin:'50px' }}>
+        <Col span={12}>
+          <Card title="Github">
+            <Card.Grid style={gridStyle}>Content</Card.Grid>
+            <Card.Grid hoverable={false} style={gridStyle}>
+              Content
+            </Card.Grid>
+            <Card.Grid style={gridStyle}>Content</Card.Grid>
+            <Card.Grid style={gridStyle}>Content</Card.Grid>
+            <Card.Grid style={gridStyle}>Content</Card.Grid>
+            <Card.Grid style={gridStyle}>Content</Card.Grid>
+            <Card.Grid style={gridStyle}>Content</Card.Grid>
+        </Card>
+        </Col>
+        
+      </Row>
+    </div>
+
   );
 }

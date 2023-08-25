@@ -1,11 +1,13 @@
 
 
-let leetcodeGraphUrl = (user) => {
+//__typename
 
+let leetcodeGraphUrl = (user) => {
     return `https://leetcode.com/graphql?query=query
     {recentSubmissionList(username:"${user}") {
         title
         titleSlug
+        time
         timestamp
         statusDisplay
         status

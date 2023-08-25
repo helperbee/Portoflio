@@ -3,26 +3,7 @@
   <head>
     <meta charset="utf-8" />
   </head>
-  <body>
-    <script src="https://extension-files.twitch.tv/helper/v1/twitch-ext.min.js"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script>
-      let test = () => {
-        axios.get(
-        'http://localhost:3000/api',
-        {            
-          headers: {
-              authorization: 'Bearer ' + window.Twitch.ext.viewer.sessionToken
-          }
-        }
-        )
-        .then(resp => {
-          console.log(resp.data);
-        }).catch((error) => {
-          console.log(error);
-        });
-      }
-    </script> 
+  <body style="background-color: tan;">
     <div id="root">      
     </div>
     <script src="bundle.js"></script>

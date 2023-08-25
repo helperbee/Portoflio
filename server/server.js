@@ -18,7 +18,7 @@ app.use(express.urlencoded({extended: true}));
 app.get('/api', (req, res) => {
   let target = Helper.leetcodeGraphUrl(process.env.LEETUSER);
   axios.get(target).then((response) => {
-    res.send(response.data.data.recentSubmissionList);
+    res.send(response.data.data.recentSubmissionList.slice(0, 10));//10 seems like enough
   }).catch((error) => {
     res.send(error);
   });
