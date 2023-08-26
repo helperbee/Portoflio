@@ -1,6 +1,4 @@
-
-
-//__typename
+const axios = require('axios');
 
 let leetcodeGraphUrl = (user) => {
     return `https://leetcode.com/graphql?query=query
@@ -36,8 +34,51 @@ let leetcodeGraphUrl = (user) => {
         }    
     }`;
     
-}
+};
+
+let gitRepos = () => {//could just use authenticated user
+  return axios.get(`https://api.github.com/users/${process.env.GITUSER}/repos`, {headers:{
+    Authorization: `Bearer ${process.env.GIT}`
+  }});  
+};
+
+let gitContributions = () => {
+  return axios.get(`https://api.github.com/users/${process.env.GITUSER}/events`, {headers:{
+    Authorization: `Bearer ${process.env.GIT}`
+  }});
+};
+
+let getReposWithRecentPush = async () => {
+  try {
+    const [reposResponse, contributionsResponse] = await Promise.all([
+      gitRepos(),
+      gitContributions()
+    ]);
+
+    const repos = reposResponse.data;
+    const contributions = contributionsResponse.data.filter(event => event.type === 'PushEvent');
+    const repoPushTimestamps = {};
+    contributions.forEach(event => {
+      const repoName = event.repo.name;
+      const eventTimestamp = new Date(event.created_at).getTime();
+      if (!repoPushTimestamps[repoName] || eventTimestamp > repoPushTimestamps[repoName]) {
+        repoPushTimestamps[repoName] = eventTimestamp;
+      }
+    });
+    repos.sort((a, b) => {
+      const timestampA = repoPushTimestamps[a.full_name] || 0;
+      const timestampB = repoPushTimestamps[b.full_name] || 0;
+      return timestampB - timestampA;
+    });
+
+    return repos;
+  } catch (error) {
+    console.error('Error fetching and sorting repositories:', error);
+    return [];
+  }
+};
 
 module.exports = {
-    leetcodeGraphUrl
+    leetcodeGraphUrl,
+    getReposWithRecentPush
 }

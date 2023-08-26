@@ -1,25 +1,25 @@
 import React from 'react';
 import axios from 'axios';
-import LeetCodeProblem from './LeetCodeProblem.jsx';
+import GitHubRepo from './GitHubRepo.jsx';
 import { Row, Col } from 'antd';
 import { Card } from 'antd';
 
-const LeetCode = () => {
+const GitHub = () => {
     const [problems, setProblems] = React.useState([]);
     React.useEffect(() => {
-        axios.get('/api/leetcode').then((response) => {
+        axios.get('/api/github').then((response) => {
             setProblems(response.data);
         }).catch((error) => {
-            console.error('Could not get problem list from server.');
+            console.error('Could not get repo list from server.');
         });
     }, []);
 
     return (
-            <Card title="Recent LeetCode" className='fade-in'>
+            <Card title="Recent GitHub" className='fade-in'>
                 <Row gutter={[16, 16]}>
                     {problems.map((p, index) => (
-                        <Col key={p.id} xs={24} sm={12} md={8} lg={6}>
-                            <LeetCodeProblem problem={p} />
+                        <Col key={p.id} xs={24} sm={12} md={8} lg={8}>
+                            <GitHubRepo repo={p} />
                         </Col>
                     ))}
                 </Row>
@@ -27,4 +27,4 @@ const LeetCode = () => {
     );
 }
 
-export default LeetCode;
+export default GitHub;

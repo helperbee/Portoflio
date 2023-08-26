@@ -15,12 +15,21 @@ app.use(express.static(path.join(__dirname, '../dist')));
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
-app.get('/api', (req, res) => {
+app.get('/api/leetcode', (req, res) => {
   let target = Helper.leetcodeGraphUrl(process.env.LEETUSER);
   axios.get(target).then((response) => {
-    res.send(response.data.data.recentSubmissionList.slice(0, 10));//10 seems like enough
+    res.send(response.data.data.recentSubmissionList.slice(0, 12));//12 seems better
   }).catch((error) => {
     res.send(error);
+  });
+});
+app.get('/api/github', (req, res) => {
+  Helper.getReposWithRecentPush()
+  .then(sortedRepos => {
+    res.send(sortedRepos);
+  })
+  .catch(error => {
+    console.error('Error:', error);
   });
 });
 

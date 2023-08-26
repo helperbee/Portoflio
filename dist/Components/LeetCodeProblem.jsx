@@ -8,10 +8,10 @@ let LeetCodeProblem = ({problem}) => {
     
     
     return (
-        <Card hoverable>
+        <Card 
+        title={`${problem.title}`} hoverable extra={<MoreOutlined/>}>
             <Card.Meta
-            title={`${problem.title}`}
-            description="relevant problem info"
+            description={`${problem.time}`}
             />
         </Card>
     );
