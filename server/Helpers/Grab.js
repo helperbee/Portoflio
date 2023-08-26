@@ -34,11 +34,16 @@ let leetcodeGraphUrl = (user) => {
         }    
     }`;    
 };
+let cachedDifficulties = {}; //no redis this time
 
 let leetcodeQuestionUrlBuilder = (questionList) => {
   //build a graph query to get question difficulties
   let url = "https://leetcode.com/graphql?query=query{";
   for(var question of questionList){
+    let title = question.title.replaceAll(' ', '');
+    if(cachedDifficulties[title] !== undefined){
+      continue;//no reason to add an already cached question.
+    }
     url += `${question.title.replaceAll(' ', '')}: question(titleSlug: "${question.titleSlug}") {
                     questionId
                     questionFrontendId
@@ -53,15 +58,23 @@ let leetcodeQuestionUrlBuilder = (questionList) => {
 
 let leetcodeModified = async (questionList) => {
   let graphUrl = leetcodeQuestionUrlBuilder(questionList);
-  try{
-    let difficulties = await axios.get(graphUrl);
-    for(let x = 0; x < questionList.length; x++){
+  try {
+    let difficulties;
+    if(graphUrl !== 'https://leetcode.com/graphql?query=query{}'){
+      //what a lazy check...
+      difficulties = await axios.get(graphUrl);
+    }
+    //const difficulties = await axios.get(graphUrl);
+    for (let x = 0; x < questionList.length; x++) {
       let title = questionList[x].title.replaceAll(' ', '');
-      questionList[x]['difficulty'] = difficulties.data.data[title].difficulty || 'Easy';      
-    }    
-  }catch(error){
+      if (cachedDifficulties[title] === undefined) {
+        cachedDifficulties[title] = difficulties.data.data[title].difficulty || 'Easy';
+      }
+      questionList[x]['difficulty'] = cachedDifficulties[title];
+    }
+  } catch (error) {
     console.log(error);
-  }finally{    
+  } finally {
     return questionList;
   }
 };
