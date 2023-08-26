@@ -15,7 +15,7 @@ const GitHub = () => {
     }, []);
 
     return (
-            <Card title="Recent GitHub" className='fade-in'>
+            <Card title="Recent GitHub">
                 <Row gutter={[16, 16]}>
                     {problems.map((p, index) => (
                         <Col key={p.id} xs={24} sm={12} md={8} lg={8}>

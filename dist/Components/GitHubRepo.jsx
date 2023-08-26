@@ -1,6 +1,6 @@
 import React from 'react';
 import { MoreOutlined } from '@ant-design/icons';
-import { Card } from 'antd';
+import { Card, Badge } from 'antd';
 
 let GitHubRepo = ({repo}) => {
     //https://github.com/Ileriayo/markdown-badges
@@ -22,15 +22,16 @@ let GitHubRepo = ({repo}) => {
     };
 
     return (
-        
+        <Badge.Ribbon text={`${repo.language}`}>
         <Card 
-        title={`${repo.name}`} hoverable extra={<MoreOutlined/>}
-        actions={[repo.language ? <img src={languageBadge(repo.language.toLowerCase())}/> : '']}
+       hoverable
         >
             <Card.Meta
-            description={`${repo.description}`}
+            title={repo.name}
+            description={`repo\n${repo.description}`}
             />
         </Card>
+        </Badge.Ribbon>
         );
 
         

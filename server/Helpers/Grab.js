@@ -32,8 +32,38 @@ let leetcodeGraphUrl = (user) => {
                          __typename
             }
         }    
-    }`;
-    
+    }`;    
+};
+
+let leetcodeQuestionUrlBuilder = (questionList) => {
+  //build a graph query to get question difficulties
+  let url = "https://leetcode.com/graphql?query=query{";
+  for(var question of questionList){
+    url += `${question.title.replaceAll(' ', '')}: question(titleSlug: "${question.titleSlug}") {
+                    questionId
+                    questionFrontendId
+                    title
+                    titleSlug
+                    difficulty
+                
+            }`;
+  };
+  return url + "}";
+};
+
+let leetcodeModified = async (questionList) => {
+  let graphUrl = leetcodeQuestionUrlBuilder(questionList);
+  try{
+    let difficulties = await axios.get(graphUrl);
+    for(let x = 0; x < questionList.length; x++){
+      let title = questionList[x].title.replaceAll(' ', '');
+      questionList[x]['difficulty'] = difficulties.data.data[title].difficulty || 'Easy';      
+    }    
+  }catch(error){
+    console.log(error);
+  }finally{    
+    return questionList;
+  }
 };
 
 let gitRepos = () => {//could just use authenticated user
@@ -80,5 +110,6 @@ let getReposWithRecentPush = async () => {
 
 module.exports = {
     leetcodeGraphUrl,
+    leetcodeModified,
     getReposWithRecentPush
 }

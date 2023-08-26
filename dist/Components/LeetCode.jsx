@@ -15,7 +15,7 @@ const LeetCode = () => {
     }, []);
 
     return (
-            <Card title="Recent LeetCode" className='fade-in'>
+            <Card title="Recent LeetCode">
                 <Row gutter={[16, 16]}>
                     {problems.map((p, index) => (
                         <Col key={p.id} xs={24} sm={12} md={8} lg={6}>

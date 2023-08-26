@@ -1,19 +1,31 @@
 import React from 'react';
 import { MoreOutlined } from '@ant-design/icons';
-import { Card } from 'antd';
+import { Card, Badge } from 'antd';
 
 let LeetCodeProblem = ({problem}) => {
     //https://github.com/Ileriayo/markdown-badges
 
-    
+    let badgeColor = (difficulty) => {
+        console.log("test");
+        switch(difficulty){
+            case 'Medium':
+                return "yellow";
+            case 'Hard':
+                return "red";
+            default:
+                return "green";
+        }
+    };
     
     return (
-        <Card 
-        title={`${problem.title}`} hoverable extra={<MoreOutlined/>}>
-            <Card.Meta
-            description={`${problem.time}`}
-            />
-        </Card>
+        <Badge.Ribbon text={`${problem.difficulty}`} color={badgeColor(problem.difficulty)}>
+            <Card 
+            title={`${problem.title}`} hoverable extra={<MoreOutlined/>}>
+                <Card.Meta
+                description={`${problem.time}`}
+                />
+            </Card>
+        </Badge.Ribbon>
     );
     // return (
     //     <>

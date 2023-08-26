@@ -44,7 +44,7 @@ export default function App() {
                       <Row justify="center" align="middle" style={{ minHeight: '100%', margin: '50px' }}>
                         <Col span={16}>
                             {card.id === 'about' && (
-                              <Card className="fade-in" title={card.content} actions={[<GithubOutlined key="github" onClick={() => openSite("https://github.com/helperbee")}/>, <LinkedinOutlined key="linkedin" onClick={() => openSite("https://www.linkedin.com/in/mikegamba/")}/>]}>
+                              <Card title={card.content} actions={[<GithubOutlined key="github" onClick={() => openSite("https://github.com/helperbee")}/>, <LinkedinOutlined key="linkedin" onClick={() => openSite("https://www.linkedin.com/in/mikegamba/")}/>]}>
                                 Hey there, I'm Mike! Welcome to my development sampler. With a decade-long devotion to coding, I've immersed myself in C#, Python, and JavaScript, crafting numerous personal projects that reflect my passion for elegant solutions. Adaptable and quick to embrace new languages, I thrive on challenges and collaborative teamwork. My journey is a fusion of relentless curiosity and staying current with technology trends. Feel free to explore my LinkedIn or GitHub by clicking below. The cards underneath feature my latest LeetCode solutions and GitHub repositories.
                               </Card>
                             )}

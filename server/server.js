@@ -15,13 +15,15 @@ app.use(express.static(path.join(__dirname, '../dist')));
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
-app.get('/api/leetcode', (req, res) => {
-  let target = Helper.leetcodeGraphUrl(process.env.LEETUSER);
-  axios.get(target).then((response) => {
-    res.send(response.data.data.recentSubmissionList.slice(0, 12));//12 seems better
-  }).catch((error) => {
-    res.send(error);
-  });
+app.get('/api/leetcode', async (req, res) => {
+  try {
+    let target = Helper.leetcodeGraphUrl(process.env.LEETUSER);
+    const response = await axios.get(target);
+    let modifiedList = await Helper.leetcodeModified(response.data.data.recentSubmissionList.slice(0, 12));
+    res.send(modifiedList);
+  } catch (error) {
+    res.send('error');
+  }
 });
 app.get('/api/github', (req, res) => {
   Helper.getReposWithRecentPush()
