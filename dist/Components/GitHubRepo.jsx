@@ -25,6 +25,7 @@ let GitHubRepo = ({repo}) => {
         <Badge.Ribbon text={`${repo.language}`}>
         <Card 
        hoverable
+       onClick={() => window.open(`${repo.html_url}`, '_blank')} 
         >
             <Card.Meta
             title={repo.name}

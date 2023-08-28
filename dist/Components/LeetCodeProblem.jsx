@@ -19,7 +19,7 @@ let LeetCodeProblem = ({problem}) => {
     
     return (
         <Badge.Ribbon text={`${problem.difficulty}`} color={badgeColor(problem.difficulty)}>
-            <Card 
+            <Card onClick={() => window.open(`https://leetcode.com${problem.url}`, '_blank')} 
             title={`${problem.title}`} hoverable extra={<MoreOutlined/>}>
                 <Card.Meta
                 description={`${problem.time}`}
