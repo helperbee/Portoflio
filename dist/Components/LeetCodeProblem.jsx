@@ -1,28 +1,38 @@
 import React from 'react';
-import { MoreOutlined } from '@ant-design/icons';
 import { Card, Badge } from 'antd';
+
+let badgeColor = (difficulty) => {
+    console.log("test");
+    switch(difficulty){
+        case 'Medium':
+            return "yellow";
+        case 'Hard':
+            return "red";
+        default:
+            return "green";
+    }
+};
+
+let createDescription = (problem) => {
+
+    return <>
+                <p>{`${problem.langName}`}</p>
+                <p>{`Solution runtime : ${problem.runtime}`}</p>
+                <p>{`Time since solving : ${problem.time}`}</p>
+           </>;
+
+};
 
 let LeetCodeProblem = ({problem}) => {
     //https://github.com/Ileriayo/markdown-badges
 
-    let badgeColor = (difficulty) => {
-        console.log("test");
-        switch(difficulty){
-            case 'Medium':
-                return "yellow";
-            case 'Hard':
-                return "red";
-            default:
-                return "green";
-        }
-    };
     
     return (
         <Badge.Ribbon text={`${problem.difficulty}`} color={badgeColor(problem.difficulty)}>
             <Card onClick={() => window.open(`https://leetcode.com${problem.url}`, '_blank')} 
-            title={`${problem.title}`} hoverable extra={<MoreOutlined/>}>
+            title={`${problem.title}`}>
                 <Card.Meta
-                description={`${problem.time}`}
+                description={createDescription(problem)}
                 />
             </Card>
         </Badge.Ribbon>
